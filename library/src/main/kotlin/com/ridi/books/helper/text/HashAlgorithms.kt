@@ -4,10 +4,12 @@ import com.ridi.books.helper.Log
 import java.security.MessageDigest
 
 object HashAlgorithms {
+    @JvmStatic
     fun md5(src: String): String {
         return hash(src, "MD5")
     }
 
+    @JvmStatic
     fun sha1(src: String): String {
         return hash(src, "SHA-1")
     }
