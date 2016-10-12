@@ -10,7 +10,7 @@ import kotlin.reflect.KProperty
  * Created by kering on 15. 11. 27..
  */
 abstract class Preferences {
-    internal abstract val preferences: SharedPreferences
+    abstract val preferences: SharedPreferences
 
     abstract inner class Delegate(protected val key: String)
 
