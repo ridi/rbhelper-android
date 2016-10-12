@@ -1,5 +1,6 @@
-package com.ridi.books.helper
+package com.ridi.books.helper.text
 
+import com.ridi.books.helper.Log
 import java.security.MessageDigest
 
 object HashAlgorithms {
@@ -23,7 +24,7 @@ object HashAlgorithms {
             }
             return hexString
         } catch (e: Exception) {
-            RBLog.e(HashAlgorithms::class.java, e)
+            Log.e(HashAlgorithms::class.java, e)
             throw e
         }
     }

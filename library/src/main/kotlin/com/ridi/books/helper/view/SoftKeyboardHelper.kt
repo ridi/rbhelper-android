@@ -1,4 +1,4 @@
-package com.ridi.books.helper
+package com.ridi.books.helper.view
 
 import android.content.Context
 import android.view.View

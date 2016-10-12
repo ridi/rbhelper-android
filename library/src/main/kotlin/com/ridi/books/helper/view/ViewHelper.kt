@@ -1,4 +1,4 @@
-package com.ridi.books.helper
+package com.ridi.books.helper.view
 
 import android.app.Activity
 import android.app.Dialog
@@ -12,6 +12,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ridi.books.helper.Log
 
 /**
  * Created by mspark on 2015. 6. 25..
@@ -42,13 +43,13 @@ fun <T : View> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 @Suppress("UNCHECKED_CAST")
 fun <T : View> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Dimension fun Context.dip(value: Int) = dip(value.toFloat())
+@Dimension fun Context.dip(@Dimension(unit = Dimension.DP) value: Int) = dip(value.toFloat())
 
-@Dimension fun View.dip(value: Int) = context.dip(value)
+@Dimension fun View.dip(@Dimension(unit = Dimension.DP) value: Int) = context.dip(value)
 
-@Dimension fun Context.dip(value: Float) = Math.round(value * resources.displayMetrics.density)
+@Dimension fun Context.dip(@Dimension(unit = Dimension.DP) value: Float) = Math.round(value * resources.displayMetrics.density)
 
-@Dimension fun View.dip(value: Float) = context.dip(value)
+@Dimension fun View.dip(@Dimension(unit = Dimension.DP) value: Float) = context.dip(value)
 
 @Dimension fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
 
@@ -89,12 +90,12 @@ fun View.setBackgroundCompat(background: Drawable?) {
 // For view hierarchy inspection
 fun ViewGroup.logChildren() {
     fun ViewGroup.logChildrenRecursively(level: Int) {
-        RBLog.d(javaClass, id.toString() + " - ViewGroup at level " + level)
+        Log.d(javaClass, id.toString() + " - ViewGroup at level " + level)
         for (i in 0..childCount - 1) {
             val child = getChildAt(i)
             when (child) {
                 is ViewGroup -> child.logChildrenRecursively(level + 1)
-                else -> RBLog.d(child.javaClass, child.id.toString())
+                else -> Log.d(child.javaClass, child.id.toString())
             }
         }
     }

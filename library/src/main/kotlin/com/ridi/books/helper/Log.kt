@@ -2,7 +2,7 @@ package com.ridi.books.helper
 
 import android.util.Log
 
-object RBLog {
+object Log {
     @JvmStatic
     fun e(tag: String, e: Throwable?) = e(tag, "", e)
 

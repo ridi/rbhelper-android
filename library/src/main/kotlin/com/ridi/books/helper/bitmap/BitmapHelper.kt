@@ -1,7 +1,8 @@
-package com.ridi.books.helper
+package com.ridi.books.helper.bitmap
 
 import android.content.Context
 import android.graphics.*
+import com.ridi.books.helper.Log
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageGammaFilter
 import java.net.URL
@@ -32,7 +33,7 @@ object BitmapHelper {
         try {
             return BitmapFactory.decodeStream(URL(urlString).openConnection().inputStream)
         } catch (e: Exception) {
-            RBLog.e(com.ridi.books.helper.BitmapHelper::class.java, "failed to load web image", e)
+            Log.e(BitmapHelper::class.java, "failed to load web image", e)
             return null
         }
     }
@@ -66,6 +67,6 @@ fun Bitmap.gammaAdjustedBitmap(context: Context, gamma: Float): Bitmap? = try {
     image.setFilter(GPUImageGammaFilter(gamma))
     image.getBitmapWithFilterApplied(this)
 } catch (e: Exception) {
-    RBLog.e(javaClass, e)
+    Log.e(javaClass, e)
     null
 }

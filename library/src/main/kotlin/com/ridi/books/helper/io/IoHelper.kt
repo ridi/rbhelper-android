@@ -1,5 +1,6 @@
-package com.ridi.books.helper
+package com.ridi.books.helper.io
 
+import com.ridi.books.helper.Log
 import java.io.*
 import java.nio.ByteBuffer
 
@@ -33,7 +34,7 @@ fun File.copyTo(dest: File): Boolean {
         output.close()
         return true
     } catch (e: Exception) {
-        RBLog.e(javaClass, "file copy error", e)
+        Log.e(javaClass, "file copy error", e)
         return false
     }
 }
@@ -73,7 +74,7 @@ fun File.makeNoMediaFile() {
     try {
         file.createNewFile()
     } catch (e: IOException) {
-        RBLog.e(javaClass, "file creating error", e)
+        Log.e(javaClass, "file creating error", e)
     }
 }
 
@@ -101,7 +102,7 @@ fun Any.saveToFile(file: File) {
         objectOutput.close()
         fileOutput.close()
     } catch (e: Exception) {
-        RBLog.e(javaClass, "writing object to file error", e)
+        Log.e(javaClass, "writing object to file error", e)
     }
 }
 
@@ -121,7 +122,7 @@ fun <T> File.loadObject(oisClass: Class<out ObjectInputStream> = ObjectInputStre
         objectInput.close()
         fileInput.close()
     } catch (e: Exception) {
-        RBLog.e(javaClass, "loading object from file error", e)
+        Log.e(javaClass, "loading object from file error", e)
     }
 
     return obj

@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
 /**
  * Created by kering on 15. 11. 27..
  */
-abstract class RBPreferences {
+abstract class Preferences {
     internal abstract val preferences: SharedPreferences
 
     internal abstract class Delegate(protected val key: String)
@@ -61,7 +61,7 @@ abstract class RBPreferences {
                     try {
                         gson.fromJson(jsonParser.parse(jsonString), clazz)
                     } catch (e: JsonSyntaxException) {
-                        RBLog.e(javaClass, e)
+                        Log.e(javaClass, e)
                         defaultValue
                     }
                 } ?: defaultValue
