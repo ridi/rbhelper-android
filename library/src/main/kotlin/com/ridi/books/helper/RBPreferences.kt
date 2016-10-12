@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
 /**
  * Created by kering on 15. 11. 27..
  */
-abstract class RidiPreferences {
+abstract class RBPreferences {
     internal abstract val preferences: SharedPreferences
 
     internal abstract class Delegate(protected val key: String)
@@ -61,7 +61,7 @@ abstract class RidiPreferences {
                     try {
                         gson.fromJson(jsonParser.parse(jsonString), clazz)
                     } catch (e: JsonSyntaxException) {
-                        RidiLog.e(javaClass, e)
+                        RBLog.e(javaClass, e)
                         defaultValue
                     }
                 } ?: defaultValue

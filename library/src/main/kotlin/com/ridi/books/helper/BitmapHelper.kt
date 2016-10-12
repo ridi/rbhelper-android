@@ -32,7 +32,7 @@ object BitmapHelper {
         try {
             return BitmapFactory.decodeStream(URL(urlString).openConnection().inputStream)
         } catch (e: Exception) {
-            RidiLog.e(com.ridi.books.helper.BitmapHelper::class.java, "failed to load web image", e)
+            RBLog.e(com.ridi.books.helper.BitmapHelper::class.java, "failed to load web image", e)
             return null
         }
     }
@@ -66,6 +66,6 @@ fun Bitmap.gammaAdjustedBitmap(context: Context, gamma: Float): Bitmap? = try {
     image.setFilter(GPUImageGammaFilter(gamma))
     image.getBitmapWithFilterApplied(this)
 } catch (e: Exception) {
-    RidiLog.e(javaClass, e)
+    RBLog.e(javaClass, e)
     null
 }

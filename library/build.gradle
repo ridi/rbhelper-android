@@ -25,7 +25,7 @@ android {
         consumerProguardFiles 'proguard-rules.pro'
     }
     sourceSets {
-        main.java.srcDirs 'src/main/kotlin'
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
