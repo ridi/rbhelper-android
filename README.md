@@ -1,4 +1,4 @@
-# ridihelper-android
+# rbhelper-android
 Convenient helper classes for Android platform
 
 ## Getting started
@@ -20,7 +20,7 @@ Then you can include this library by adding dependency script to build.gradle fi
 ```
 dependencies {
     ...
-    compile 'com.github.ridibooks:ridihelper-android:1.0' 
+    compile 'com.github.ridibooks:rbhelper-android:1.0' 
     ...
 }
 ```
