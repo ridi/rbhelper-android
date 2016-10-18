@@ -10,32 +10,28 @@ import java.net.URL
 /**
  * Created by kering on 2013. 12. 20..
  */
-object BitmapHelper {
-    // 적합한 sample size를 계산해낸다
-    @JvmStatic
-    fun computeSampleSize(srcWidth: Int, srcHeight: Int, reqWidth: Int, reqHeight: Int): Int {
-        var sampleSize = 1
+// 적합한 sample size를 계산해낸다
+fun computeSampleSize(srcWidth: Int, srcHeight: Int, reqWidth: Int, reqHeight: Int): Int {
+    var sampleSize = 1
 
-        if (srcWidth > reqWidth || srcHeight > reqHeight) {
-            val halfWidth = srcWidth / 2
-            val halfHeight = srcHeight / 2
+    if (srcWidth > reqWidth || srcHeight > reqHeight) {
+        val halfWidth = srcWidth / 2
+        val halfHeight = srcHeight / 2
 
-            while ((halfWidth / sampleSize) > reqWidth && (halfHeight / sampleSize) > reqHeight) {
-                sampleSize *= 2
-            }
+        while ((halfWidth / sampleSize) > reqWidth && (halfHeight / sampleSize) > reqHeight) {
+            sampleSize *= 2
         }
-
-        return sampleSize
     }
 
-    @JvmStatic
-    fun loadWebImage(urlString: String): Bitmap? {
-        try {
-            return BitmapFactory.decodeStream(URL(urlString).openConnection().inputStream)
-        } catch (e: Exception) {
-            Log.e(BitmapHelper::class.java, "failed to load web image", e)
-            return null
-        }
+    return sampleSize
+}
+
+fun URL.loadWebImage(): Bitmap? {
+    try {
+        return BitmapFactory.decodeStream(openConnection().inputStream)
+    } catch (e: Exception) {
+        Log.e(javaClass, "failed to load web image", e)
+        return null
     }
 }
 

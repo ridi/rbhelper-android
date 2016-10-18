@@ -9,9 +9,7 @@ import android.os.Build
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.ridi.books.helper.Log
 
 /**
@@ -84,6 +82,29 @@ fun View.setBackgroundCompat(background: Drawable?) {
     } else {
         @Suppress("DEPRECATION")
         setBackgroundDrawable(background)
+    }
+}
+
+private fun Context.getSystemBarHeight(resourceName: String): Int {
+    val resourceId = resources.getIdentifier(resourceName, "dimen", "android")
+    if (resourceId > 0) {
+        return resources.getDimensionPixelSize(resourceId)
+    } else {
+        return 0
+    }
+}
+
+fun Context.getStatusBarHeight() = getSystemBarHeight("status_bar_height")
+
+fun Context.getNavigationBarHeight() = getSystemBarHeight("navigation_bar_height")
+
+fun Context.isNavigationBarOnScreen(): Boolean {
+    val id = resources.getIdentifier("config_showNavigationBar", "bool", "android")
+    if (id > 0) {
+        return bool(id)
+    } else {
+        return ViewConfiguration.get(this).hasPermanentMenuKey().not()
+                && KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK).not()
     }
 }
 

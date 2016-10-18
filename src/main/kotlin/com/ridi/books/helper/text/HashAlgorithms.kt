@@ -3,31 +3,23 @@ package com.ridi.books.helper.text
 import com.ridi.books.helper.Log
 import java.security.MessageDigest
 
-object HashAlgorithms {
-    @JvmStatic
-    fun md5(src: String): String {
-        return hash(src, "MD5")
-    }
+private fun String.hash(algorithm: String): String {
+    try {
+        val digest = MessageDigest.getInstance(algorithm)
+        digest.update(toByteArray())
+        val messageDigest = digest.digest()
 
-    @JvmStatic
-    fun sha1(src: String): String {
-        return hash(src, "SHA-1")
-    }
-
-    private fun hash(src: String, algorithm: String): String {
-        try {
-            val digest = MessageDigest.getInstance(algorithm)
-            digest.update(src.toByteArray())
-            val messageDigest = digest.digest()
-
-            var hexString = ""
-            for (i in messageDigest.indices) {
-                hexString += String.format("%02x", messageDigest[i])
-            }
-            return hexString
-        } catch (e: Exception) {
-            Log.e(HashAlgorithms::class.java, e)
-            throw e
+        var hexString = ""
+        for (i in messageDigest.indices) {
+            hexString += String.format("%02x", messageDigest[i])
         }
+        return hexString
+    } catch (e: Exception) {
+        Log.e(javaClass, e)
+        throw e
     }
 }
+
+fun String.md5() = hash("MD5")
+
+fun String.sha1() = hash("SHA-1")
