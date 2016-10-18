@@ -54,7 +54,3 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives sourcesJar
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
