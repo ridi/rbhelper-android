@@ -17,12 +17,14 @@ object ZipHelper {
     @JvmStatic
     @JvmOverloads
     fun unzip(zipFile: File, destDir: File,
-                            deleteZip: Boolean, listener: Listener? = null): Boolean {
+                            deleteZip: Boolean, listener: Listener? = null, encodings: List<String> = listOf("UTF8")): Boolean {
         if (!zipFile.exists()) {
             return false
         }
         try {
-            return unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener)
+            var result = true
+            encodings.forEach { result = result && unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it) }
+            return result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
             return false
@@ -35,11 +37,11 @@ object ZipHelper {
 
     @JvmStatic
     @JvmOverloads
-    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null): Boolean {
+    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null, encoding: String = "UTF8"): Boolean {
         destDir.mkdirs()
 
+        val zipInputStream = ZipArchiveInputStream(inputStream, encoding, true, true)
         try {
-            val zipInputStream = ZipArchiveInputStream(inputStream, "UTF8", true, true)
             var entry: ZipArchiveEntry?
 
             while (true) {
@@ -56,7 +58,11 @@ object ZipHelper {
                     continue
                 }
 
-                val path = File(destDir, entry.name).path
+                val file = File(destDir, entry.name)
+                if (file.length() == entry.size) {
+                    continue
+                }
+                val path = file.path
                 if (path.lastIndexOf('/') != -1) {
                     val d = File(path.substring(0, path.lastIndexOf('/')))
                     d.mkdirs()
@@ -81,12 +87,12 @@ object ZipHelper {
                 } while(true)
                 out.close()
             }
-            zipInputStream.close()
-
             return true
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
             return false
+        } finally {
+            zipInputStream.close()
         }
     }
 }
