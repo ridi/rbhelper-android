@@ -48,7 +48,7 @@ object ZipHelper {
                 try {
                     entry = zipInputStream.nextZipEntry
                 } catch (e: MalformedInputException) {
-                    Log.e(javaClass, "Filename encoding error", e)
+                    Log.d(javaClass, "Filename encoding error", e)
                     // 파일명에서 인코딩 오류 발생 시에, 해당 파일 무시
                     continue
                 }

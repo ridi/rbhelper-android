@@ -83,7 +83,7 @@ public final class StorageOptions {
             }
             return mounts;
         } catch (Exception e) {
-            Log.e(StorageOptions.class, e);
+            Log.d(StorageOptions.class, e);
             return Collections.emptyList();
         } finally {
             if (scanner != null) {
@@ -111,7 +111,7 @@ public final class StorageOptions {
             }
             return volds;
         } catch (Exception e) {
-            Log.e(StorageOptions.class, e);
+            Log.d(StorageOptions.class, e);
             return Collections.emptyList();
         } finally {
             if (scanner != null) {
@@ -142,7 +142,7 @@ public final class StorageOptions {
             }
             return mounts;
         } catch (Exception e) {
-            Log.e(StorageOptions.class, e);
+            Log.d(StorageOptions.class, e);
             return Collections.emptyList();
         } finally {
             if (scanner != null) {

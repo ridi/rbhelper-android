@@ -12,7 +12,7 @@ fun ProgressDialog?.dismissSafely() {
         try {
             this!!.dismiss()
         } catch (e: Exception) {
-            Log.e(this!!.javaClass, e)
+            Log.d(this!!.javaClass, e)
         }
     }
 }

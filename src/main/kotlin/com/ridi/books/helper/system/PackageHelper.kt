@@ -15,7 +15,7 @@ fun Context.getPackageVersionCode(`package`: String): Int {
             return info.versionCode
         }
     } catch (e: PackageManager.NameNotFoundException) {
-        Log.e("Failed to get $`package` package info", e)
+        Log.d("Failed to get $`package` package info", e)
     }
     return -1
 }
