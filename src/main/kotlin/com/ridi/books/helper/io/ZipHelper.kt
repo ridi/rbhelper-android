@@ -22,8 +22,8 @@ object ZipHelper {
             return false
         }
         try {
-            var result = true
-            encodings.forEach { result = result && unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it) }
+            var result = false
+            encodings.forEach { result = unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it) || result }
             return result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
