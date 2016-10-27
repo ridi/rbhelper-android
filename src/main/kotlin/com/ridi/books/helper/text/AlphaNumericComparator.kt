@@ -56,15 +56,7 @@ class AlphaNumericComparator : Comparator<String> {
         if (diff != 0) {
             return diff
         }
-        var i = 0
-        while (i < lhs.remaining() && i < rhs.remaining()) {
-            val result = lhs.get(i) - rhs.get(i)
-            if (result != 0) {
-                return result
-            }
-            ++i
-        }
-        return 0
+        return lhs.compareTo(rhs)
     }
 
     private fun prepareForNextIteration(buffer: CharBuffer) = buffer.position(buffer.limit()).limit(buffer.capacity())
