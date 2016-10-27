@@ -16,14 +16,14 @@ object ZipHelper {
 
     @JvmStatic
     @JvmOverloads
-    fun unzip(zipFile: File, destDir: File,
-                            deleteZip: Boolean, listener: Listener? = null, encodings: List<String> = listOf("UTF8")): Boolean {
+    fun unzip(zipFile: File, destDir: File, deleteZip: Boolean, listener: Listener? = null,
+              encodings: List<String> = listOf("UTF8"), overwrite: Boolean = true): Boolean {
         if (!zipFile.exists()) {
             return false
         }
         try {
             var result = false
-            encodings.forEach { result = unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it) || result }
+            encodings.forEach { result = unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it, overwrite) || result }
             return result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
@@ -37,7 +37,8 @@ object ZipHelper {
 
     @JvmStatic
     @JvmOverloads
-    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null, encoding: String = "UTF8"): Boolean {
+    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null,
+              encoding: String = "UTF8", overwrite: Boolean = true): Boolean {
         destDir.mkdirs()
 
         val zipInputStream = ZipArchiveInputStream(inputStream, encoding, true, true)
@@ -59,7 +60,7 @@ object ZipHelper {
                 }
 
                 val file = File(destDir, entry.name)
-                if (file.length() == entry.size) {
+                if (overwrite.not() && file.length() == entry.size) {
                     continue
                 }
                 val path = file.path
