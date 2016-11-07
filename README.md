@@ -2,7 +2,7 @@
 Convenient helper classes for Android platform
 
 ## Getting started
-[![Release](https://jitpack.io/v/ridibooks/rbhelper-android.svg)](https://jitpack.io/#ridibooks/rbhelper-android)
+[![Build Status](https://travis-ci.org/ridibooks/rbhelper-android.svg?branch=master)](https://travis-ci.org/ridibooks/rbhelper-android)[![Release](https://jitpack.io/v/ridibooks/rbhelper-android.svg)](https://jitpack.io/#ridibooks/rbhelper-android)
 
 This library is distributed by [jitpack](https://jitpack.io).
 
