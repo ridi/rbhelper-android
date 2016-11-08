@@ -76,6 +76,10 @@ fun Context.bool(@BoolRes resId: Int) = resources.getBoolean(resId)
 
 fun View.bool(@BoolRes resId: Int) = context.bool(resId)
 
+fun Context.integer(@IntegerRes resId: Int) = resources.getInteger(resId)
+
+fun View.integer(@IntegerRes resId: Int) = context.integer(resId)
+
 fun View.setBackgroundCompat(background: Drawable?) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
         this.background = background
