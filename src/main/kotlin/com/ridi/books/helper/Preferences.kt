@@ -68,7 +68,7 @@ abstract class Preferences {
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) =
                 preferences.edit()
-                        .putString(key, value?.let { gson.toJson(it).toString() } ?: null)
+                        .putString(key, value?.let { gson.toJson(it).toString() })
                         .apply()
     }
 }
