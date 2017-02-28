@@ -8,10 +8,11 @@ import com.ridi.books.helper.Log
 /**
  * Created by kering on 2016. 10. 18..
  */
-fun Context.getPackageVersionCode(`package`: String): Int {
+@JvmOverloads
+fun Context.getPackageVersionCode(`package`: String, enabledOnly: Boolean = true): Int {
     try {
         val info = packageManager.getPackageInfo(`package`, 0)
-        if (info.applicationInfo.enabled) {
+        if (enabledOnly.not() || info.applicationInfo.enabled) {
             return info.versionCode
         }
     } catch (e: PackageManager.NameNotFoundException) {
@@ -28,7 +29,8 @@ fun Context.getSystemWebViewVersionCode(): Int {
         }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        return getPackageVersionCode("com.google.android.webview")
+        return getPackageVersionCode("com.google.android.webview",
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
     }
     return -1
 }
