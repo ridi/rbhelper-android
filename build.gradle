@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ridibooks'
-version = '1.0.10'
+version = '1.0.11'
 
 android {
     compileSdkVersion 25
