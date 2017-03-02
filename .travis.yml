@@ -10,7 +10,7 @@ android:
     - android-25
     - extra-android-m2repository
 
-script: ./gradlew assembleRelease
+script: ./gradlew test
 
 notifications:
   email: false
