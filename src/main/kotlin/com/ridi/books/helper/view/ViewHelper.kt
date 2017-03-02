@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.*
 import com.ridi.books.helper.Log
+import com.ridi.books.helper.annotation.Dp
 
 /**
  * Created by mspark on 2015. 6. 25..
@@ -41,17 +42,17 @@ fun <T : View> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 @Suppress("UNCHECKED_CAST")
 fun <T : View> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Dimension fun Context.dip(@Dimension(unit = Dimension.DP) value: Int) = dip(value.toFloat())
+@Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
 
-@Dimension fun View.dip(@Dimension(unit = Dimension.DP) value: Int) = context.dip(value)
+@Px fun View.dip(@Dp value: Int) = context.dip(value)
 
-@Dimension fun Context.dip(@Dimension(unit = Dimension.DP) value: Float) = Math.round(value * resources.displayMetrics.density)
+@Px fun Context.dip(@Dp value: Float) = Math.round(value * resources.displayMetrics.density)
 
-@Dimension fun View.dip(@Dimension(unit = Dimension.DP) value: Float) = context.dip(value)
+@Px fun View.dip(@Dp value: Float) = context.dip(value)
 
-@Dimension fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
+@Px fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
 
-@Dimension fun View.dimen(@DimenRes resId: Int) = context.dimen(resId)
+@Px fun View.dimen(@DimenRes resId: Int) = context.dimen(resId)
 
 @ColorInt fun Context.color(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 
