@@ -4,17 +4,6 @@ import com.ridi.books.helper.Log
 import java.io.*
 import java.nio.ByteBuffer
 
-fun File.deleteTree() {
-    if (isDirectory) {
-        listFiles()?.let { children ->
-            for (child in children) {
-                child?.deleteTree()
-            }
-        }
-    }
-    delete()
-}
-
 fun File.copyTo(dest: File): Boolean {
     try {
         val input = FileInputStream(this)
