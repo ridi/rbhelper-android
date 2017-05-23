@@ -18,29 +18,21 @@ import com.ridi.books.helper.annotation.Dp
  */
 fun ViewGroup.inflate(@LayoutRes resId: Int): View = LayoutInflater.from(context).inflate(resId, this)
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> View.find(@IdRes viewId: Int) = findViewById(viewId) as T
+inline fun <reified T : View> View.find(@IdRes viewId: Int) = findViewById(viewId) as T
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Fragment.find(@IdRes viewId: Int) = view.findViewById(viewId) as T
+inline fun <reified T : View> Fragment.find(@IdRes viewId: Int) = view.findViewById(viewId) as T
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Activity.find(@IdRes viewId: Int) = findViewById(viewId) as T
+inline fun <reified T : View> Activity.find(@IdRes viewId: Int) = findViewById(viewId) as T
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Dialog.find(@IdRes viewId: Int) = findViewById(viewId) as T
+inline fun <reified T : View> Dialog.find(@IdRes viewId: Int) = findViewById(viewId) as T
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+inline fun <reified T : View> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Activity.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+inline fun <reified T : View> Activity.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+inline fun <reified T : View> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Suppress("UNCHECKED_CAST")
-fun <T : View> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+inline fun <reified T : View> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
 
