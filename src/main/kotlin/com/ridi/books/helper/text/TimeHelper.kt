@@ -1,8 +1,6 @@
 package com.ridi.books.helper.text
 
-import java.util.Calendar
-
-fun Long.elapsedTimeString(): String {
+fun Long.elapsedTimeString(tooMuchElapsed: String): String {
     var elapsed = System.currentTimeMillis() - this
     val second = 1000
     val minute = second * 60
@@ -12,9 +10,7 @@ fun Long.elapsedTimeString(): String {
     val suffix: String
 
     if (elapsed / week > 3) {
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = this
-        return "${cal.get(Calendar.YEAR)}.${cal.get(Calendar.MONDAY) + 1}.${cal.get(Calendar.DAY_OF_MONTH)}"
+        return tooMuchElapsed
     } else if (elapsed / week > 0) {
         suffix = "주 전"
         elapsed /= week
