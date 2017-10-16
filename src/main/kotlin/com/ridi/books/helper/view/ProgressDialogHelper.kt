@@ -4,11 +4,11 @@ import android.app.ProgressDialog
 import com.ridi.books.helper.Log
 
 fun ProgressDialog?.dismissSafely() {
-    if (this?.isShowing ?: false) {
+    if (this?.isShowing == true) {
         try {
-            this!!.dismiss()
+            dismiss()
         } catch (e: Exception) {
-            Log.d(this!!.javaClass, e)
+            Log.d(this.javaClass, e)
         }
     }
 }

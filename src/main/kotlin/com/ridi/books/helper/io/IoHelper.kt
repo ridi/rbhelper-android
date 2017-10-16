@@ -96,9 +96,8 @@ fun Any.saveToFile(file: File) {
 }
 
 @Suppress("UNCHECKED_CAST")
-@JvmOverloads
-fun <T> File.loadObject(oisClass: Class<out ObjectInputStream> = ObjectInputStream::class.java): T? {
-    if (!exists()) {
+fun <T> File.loadObject(): T? {
+    if (exists().not()) {
         return null
     }
 
@@ -106,7 +105,7 @@ fun <T> File.loadObject(oisClass: Class<out ObjectInputStream> = ObjectInputStre
 
     try {
         val fileInput = FileInputStream(this)
-        val objectInput = oisClass.getDeclaredConstructor(InputStream::class.java).newInstance(fileInput)
+        val objectInput = ObjectInputStream(fileInput)
         obj = objectInput.readObject() as T?
         objectInput.close()
         fileInput.close()
@@ -128,7 +127,7 @@ fun closeAndThrowExceptionToReport(closeable: Closeable?, primaryException: IOEx
         }
 
     }
-    if (throwable != null) {
-        throw throwable
+    throwable?.let {
+        throw it
     }
 }

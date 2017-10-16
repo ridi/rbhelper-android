@@ -55,7 +55,7 @@ fun <T : View?> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @ColorInt fun View.color(@ColorRes resId: Int) = context.color(resId)
 
-fun Context.drawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)
+fun Context.drawable(@DrawableRes resId: Int): Drawable = ContextCompat.getDrawable(this, resId)
 
 fun View.drawable(@DrawableRes resId: Int) = context.drawable(resId)
 
@@ -89,10 +89,10 @@ fun View.setBackgroundCompat(background: Drawable?) {
 
 private fun Context.getSystemBarHeight(resourceName: String): Int {
     val resourceId = resources.getIdentifier(resourceName, "dimen", "android")
-    if (resourceId > 0) {
-        return resources.getDimensionPixelSize(resourceId)
+    return if (resourceId > 0) {
+        resources.getDimensionPixelSize(resourceId)
     } else {
-        return 0
+        0
     }
 }
 
@@ -102,11 +102,11 @@ fun Context.getNavigationBarHeight() = getSystemBarHeight("navigation_bar_height
 
 fun Context.isNavigationBarOnScreen(): Boolean {
     val id = resources.getIdentifier("config_showNavigationBar", "bool", "android")
-    if (id > 0) {
-        return bool(id)
+    return if (id > 0) {
+        bool(id)
     } else {
-        return ViewConfiguration.get(this).hasPermanentMenuKey().not()
-                && KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK).not()
+        (ViewConfiguration.get(this).hasPermanentMenuKey().not()
+                && KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK).not())
     }
 }
 
@@ -114,13 +114,14 @@ fun Context.isNavigationBarOnScreen(): Boolean {
 fun ViewGroup.logChildren() {
     fun ViewGroup.logChildrenRecursively(level: Int) {
         Log.d(javaClass, id.toString() + " - ViewGroup at level " + level)
-        for (i in 0..childCount - 1) {
-            val child = getChildAt(i)
-            when (child) {
-                is ViewGroup -> child.logChildrenRecursively(level + 1)
-                else -> Log.d(child.javaClass, child.id.toString())
-            }
-        }
+        (0 until childCount)
+                .map { getChildAt(it) }
+                .forEach { child ->
+                    when (child) {
+                        is ViewGroup -> child.logChildrenRecursively(level + 1)
+                        else -> Log.d(child.javaClass, "${child.id}")
+                    }
+                }
     }
     logChildrenRecursively(0)
 }

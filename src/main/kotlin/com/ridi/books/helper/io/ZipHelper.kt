@@ -18,16 +18,16 @@ object ZipHelper {
     @JvmOverloads
     fun unzip(zipFile: File, destDir: File, deleteZip: Boolean, listener: Listener? = null,
               encodings: List<String> = listOf("UTF8"), overwrite: Boolean = true): Boolean {
-        if (!zipFile.exists()) {
+        if (zipFile.exists().not()) {
             return false
         }
-        try {
+        return try {
             var result = false
             encodings.forEach { result = unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it, overwrite) || result }
-            return result
+            result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
-            return false
+            false
         } finally {
             if (deleteZip) {
                 zipFile.delete()
@@ -79,10 +79,10 @@ object ZipHelper {
                         break
                     }
                     out.write(buf, 0, readSize)
-                    if (listener != null) {
+                    listener?.let {
                         val bytesRead = zipInputStream.bytesRead - prevBytesRead
                         if ((bytesRead / bufferSize) % progressUpdateStepSize == 0L) {
-                            listener.onProgress(bytesRead + prevBytesRead)
+                            it.onProgress(bytesRead + prevBytesRead)
                         }
                     }
                 } while(true)
