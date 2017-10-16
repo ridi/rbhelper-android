@@ -6,9 +6,6 @@ import com.google.gson.JsonParser
 import com.google.gson.JsonSyntaxException
 import kotlin.reflect.KProperty
 
-/**
- * Created by kering on 15. 11. 27..
- */
 abstract class Preferences {
     abstract val preferences: SharedPreferences
 

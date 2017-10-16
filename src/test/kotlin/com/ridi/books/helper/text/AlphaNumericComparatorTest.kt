@@ -3,9 +3,6 @@ package com.ridi.books.helper.text
 import org.junit.Assert
 import org.junit.Test
 
-/**
- * Created by kering on 2017. 3. 2..
- */
 class AlphaNumericComparatorTest {
     @Test
     fun test() {

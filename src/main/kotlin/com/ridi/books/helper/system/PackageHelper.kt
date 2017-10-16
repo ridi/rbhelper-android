@@ -5,9 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.ridi.books.helper.Log
 
-/**
- * Created by kering on 2016. 10. 18..
- */
 @JvmOverloads
 fun Context.getPackageVersionCode(`package`: String, enabledOnly: Boolean = true): Int {
     try {

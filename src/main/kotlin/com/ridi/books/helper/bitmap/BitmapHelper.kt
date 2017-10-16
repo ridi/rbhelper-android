@@ -7,9 +7,6 @@ import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageGammaFilter
 import java.net.URL
 
-/**
- * Created by kering on 2013. 12. 20..
- */
 // 적합한 sample size를 계산해낸다
 fun computeSampleSize(srcWidth: Int, srcHeight: Int, reqWidth: Int, reqHeight: Int): Int {
     var sampleSize = 1

@@ -3,9 +3,6 @@ package com.ridi.books.helper.text
 import java.nio.CharBuffer
 import java.util.*
 
-/**
- * Created by kering on 16. 4. 12..
- */
 class AlphaNumericComparator : Comparator<String> {
     override fun compare(lhs: String, rhs: String): Int {
         val lb = CharBuffer.wrap(lhs)

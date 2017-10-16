@@ -13,9 +13,6 @@ import android.view.*
 import com.ridi.books.helper.Log
 import com.ridi.books.helper.annotation.Dp
 
-/**
- * Created by mspark on 2015. 6. 25..
- */
 fun ViewGroup.inflate(@LayoutRes resId: Int): View = LayoutInflater.from(context).inflate(resId, this)
 
 @Suppress("UNCHECKED_CAST")
