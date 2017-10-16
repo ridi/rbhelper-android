@@ -78,15 +78,6 @@ fun Context.integer(@IntegerRes resId: Int) = resources.getInteger(resId)
 
 fun View.integer(@IntegerRes resId: Int) = context.integer(resId)
 
-fun View.setBackgroundCompat(background: Drawable?) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-        this.background = background
-    } else {
-        @Suppress("DEPRECATION")
-        setBackgroundDrawable(background)
-    }
-}
-
 private fun Context.getSystemBarHeight(resourceName: String): Int {
     val resourceId = resources.getIdentifier(resourceName, "dimen", "android")
     return if (resourceId > 0) {
