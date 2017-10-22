@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.ridi.books.helper.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -17,10 +18,11 @@ public final class StorageOptions {
     private StorageOptions() {
     }
 
-    public static List<String> getExternalSDCardPaths(Context context, boolean showRootPath) {
+    public static List<String> getExternalSDCardPaths(
+            Context context, boolean rootPathOnly, boolean alwaysFromMountsFile) {
         List<String> mounts = new ArrayList<>();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !alwaysFromMountsFile) {
             File[] externalDirs = context.getExternalFilesDirs(null);
             File internalDir = context.getExternalFilesDir(null);
             for (File externalDir : externalDirs) {
@@ -29,8 +31,8 @@ public final class StorageOptions {
                     continue;
                 }
 
-                if (showRootPath) {
-                    // 외장 SD 카드 내부 경로 -> /Android/data/com.initialcoms.ridi/files/
+                if (rootPathOnly) {
+                    // 외장 SD 카드 내부 경로 -> /Android/data/some.application.id/files/
                     externalDir = externalDir.getParentFile().getParentFile().getParentFile().getParentFile();
                 }
 
@@ -43,7 +45,7 @@ public final class StorageOptions {
         }
 
         mounts.addAll(readVoldsFromMountsFile());
-        if (!mounts.isEmpty()) {
+        if (!mounts.isEmpty() && Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             compareMountsWithVold(mounts, readVoldFile());
         }
         if (mounts.isEmpty()) {
@@ -51,13 +53,18 @@ public final class StorageOptions {
         }
         testAndCleanMountsList(mounts);
 
-        // 내장 SD 카드는 마운트된 항목에서 제거한다
-        Iterator<String> it = mounts.iterator();
-        while (it.hasNext()) {
-            String path = it.next();
-            if (path.equalsIgnoreCase(Environment.getExternalStorageDirectory().getPath())) {
-                it.remove();
+        try {
+            // 내장 SD 카드는 마운트된 항목에서 제거한다
+            String internalStoragePath = Environment.getExternalStorageDirectory().getCanonicalPath();
+            Iterator<String> it = mounts.iterator();
+            while (it.hasNext()) {
+                String path = it.next();
+                if (path.equals(internalStoragePath)) {
+                    it.remove();
+                }
             }
+        } catch (IOException e) {
+            Log.d(StorageOptions.class, e);
         }
         
         return mounts;
