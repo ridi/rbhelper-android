@@ -1,6 +1,6 @@
 # rbhelper-android
 
-[![Build Status](https://travis-ci.org/ridibooks/rbhelper-android.svg?branch=master)](https://travis-ci.org/ridibooks/rbhelper-android)
+[![Build Status](https://travis-ci.org/ridi/rbhelper-android.svg?branch=master)](https://travis-ci.org/ridibooks/rbhelper-android)
 [![Release](https://jitpack.io/v/ridibooks/rbhelper-android.svg)](https://jitpack.io/#ridibooks/rbhelper-android)
 
 Convenient helper classes for Android platform
