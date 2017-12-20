@@ -10,8 +10,16 @@ object ZipHelper {
     private val bufferSize = 8192
     private val progressUpdateStepSize = bufferSize / 16
 
+    enum class EncryptResult {
+        SUCCESS, FAIL, UNNECESSARY, FINISH
+    }
+
     interface Listener {
         fun onProgress(unzippedBytes: Long)
+    }
+
+    interface Encryptor {
+        fun onEncrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String): EncryptResult
     }
 
     @JvmStatic
@@ -23,7 +31,10 @@ object ZipHelper {
         }
         return try {
             var result = false
-            encodings.forEach { result = unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, it, overwrite) || result }
+            encodings.forEach {
+                result = unzip(BufferedInputStream(FileInputStream(zipFile)),
+                        destDir, listener, null, it, overwrite) || result
+            }
             result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
@@ -36,15 +47,25 @@ object ZipHelper {
     }
 
     @JvmStatic
+    fun unzipEncryptIfNeeded(inputStream: InputStream, destDir: File, listener: Listener?, encryptor: Encryptor?): Boolean {
+        return unzip(inputStream, destDir, listener, encryptor)
+    }
+
+    @JvmStatic
+    fun unzipSelectedFile(inputStream: InputStream, destDir: File, selectedFileName: String): Boolean {
+        return unzip(inputStream, destDir, selectedFileName = selectedFileName)
+    }
+
+    @JvmStatic
     @JvmOverloads
-    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null,
-              encoding: String = "UTF8", overwrite: Boolean = true): Boolean {
+    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null, encryptor: Encryptor? = null,
+              encoding: String = "UTF8", overwrite: Boolean = true, selectedFileName: String? = null): Boolean {
         destDir.mkdirs()
 
         val zipInputStream = ZipArchiveInputStream(inputStream, encoding, true, true)
         try {
             var entry: ZipArchiveEntry?
-
+            var encryptFinish = false
             while (true) {
                 try {
                     entry = zipInputStream.nextZipEntry
@@ -57,6 +78,12 @@ object ZipHelper {
                 entry ?: break
                 if (entry.isDirectory) {
                     continue
+                }
+
+                if (selectedFileName != null) {
+                    if (entry.name != selectedFileName) {
+                        continue
+                    }
                 }
 
                 val file = File(destDir, entry.name)
@@ -73,6 +100,18 @@ object ZipHelper {
                 val buf = ByteArray(bufferSize)
                 var readSize: Int
                 val prevBytesRead = zipInputStream.bytesRead
+                if (encryptor != null && encryptFinish.not()) {
+                    val result = encryptor.onEncrypt(zipInputStream, out, file.name)
+                    if (result == EncryptResult.FAIL) {
+                        out.close()
+                        return false
+                    } else if (result == EncryptResult.SUCCESS) {
+                        continue
+                    } else if (result == EncryptResult.FINISH) {
+                        encryptFinish = true
+                    }
+                }
+
                 do {
                     readSize = zipInputStream.read(buf)
                     if (readSize <= 0) {
@@ -85,7 +124,8 @@ object ZipHelper {
                             it.onProgress(bytesRead + prevBytesRead)
                         }
                     }
-                } while(true)
+                } while (true)
+
                 out.close()
             }
             return true
