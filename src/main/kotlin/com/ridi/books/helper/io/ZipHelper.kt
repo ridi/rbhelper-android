@@ -11,7 +11,7 @@ object ZipHelper {
     private val progressUpdateStepSize = bufferSize / 16
 
     enum class EncryptResult {
-        SUCCESS, FAIL, UNNECESSARY, FINISH
+        SUCCESS, FAIL, UNNECESSARY
     }
 
     interface Listener {
@@ -65,7 +65,6 @@ object ZipHelper {
         val zipInputStream = ZipArchiveInputStream(inputStream, encoding, true, true)
         try {
             var entry: ZipArchiveEntry?
-            var encryptFinish = false
             while (true) {
                 try {
                     entry = zipInputStream.nextZipEntry
@@ -80,10 +79,8 @@ object ZipHelper {
                     continue
                 }
 
-                if (selectedFileName != null) {
-                    if (entry.name != selectedFileName) {
-                        continue
-                    }
+                if (selectedFileName?.equals(entry.name) == false) {
+                    continue
                 }
 
                 val file = File(destDir, entry.name)
@@ -100,15 +97,13 @@ object ZipHelper {
                 val buf = ByteArray(bufferSize)
                 var readSize: Int
                 val prevBytesRead = zipInputStream.bytesRead
-                if (encryptor != null && encryptFinish.not()) {
+                if (encryptor != null) {
                     val result = encryptor.onEncrypt(zipInputStream, out, file.name)
                     if (result == EncryptResult.FAIL) {
                         out.close()
                         return false
                     } else if (result == EncryptResult.SUCCESS) {
                         continue
-                    } else if (result == EncryptResult.FINISH) {
-                        encryptFinish = true
                     }
                 }
 
