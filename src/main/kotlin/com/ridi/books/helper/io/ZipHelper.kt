@@ -30,12 +30,10 @@ object ZipHelper {
             return false
         }
         return try {
-            var result = false
-            encodings.forEach {
-                result = unzip(BufferedInputStream(FileInputStream(zipFile)),
-                        destDir, listener, null, it, overwrite) || result
+            encodings.any {
+                unzip(BufferedInputStream(FileInputStream(zipFile)),
+                        destDir, listener, null, it, overwrite)
             }
-            result
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
             false
@@ -99,11 +97,13 @@ object ZipHelper {
                 val prevBytesRead = zipInputStream.bytesRead
                 if (encryptor != null) {
                     val result = encryptor.onEncrypt(zipInputStream, out, file.name)
-                    if (result == EncryptResult.FAIL) {
+                    if (isEncryptSuccess(result)) {
+                        if (result == EncryptResult.SUCCESS) {
+                            continue
+                        }
+                    } else {
                         out.close()
                         return false
-                    } else if (result == EncryptResult.SUCCESS) {
-                        continue
                     }
                 }
 
@@ -131,4 +131,6 @@ object ZipHelper {
             zipInputStream.close()
         }
     }
+
+    private fun isEncryptSuccess(encryptResult: EncryptResult): Boolean = (encryptResult == EncryptResult.FAIL).not()
 }
