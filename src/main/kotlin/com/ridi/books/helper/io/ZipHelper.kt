@@ -19,7 +19,7 @@ object ZipHelper {
     }
 
     interface Encryptor {
-        fun onEncrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String): EncryptResult
+        fun encrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String): EncryptResult
     }
 
     @JvmStatic
@@ -96,14 +96,14 @@ object ZipHelper {
                 var readSize: Int
                 val prevBytesRead = zipInputStream.bytesRead
                 if (encryptor != null) {
-                    val result = encryptor.onEncrypt(zipInputStream, out, file.name)
-                    if (isEncryptSuccess(result)) {
+                    val result = encryptor.encrypt(zipInputStream, out, file.name)
+                    if (result == EncryptResult.FAIL) {
                         if (result == EncryptResult.SUCCESS) {
                             continue
                         }
                     } else {
                         out.close()
-                        return false
+                        throw EncryptException(file.name)
                     }
                 }
 
@@ -131,6 +131,4 @@ object ZipHelper {
             zipInputStream.close()
         }
     }
-
-    private fun isEncryptSuccess(encryptResult: EncryptResult): Boolean = (encryptResult == EncryptResult.FAIL).not()
 }
