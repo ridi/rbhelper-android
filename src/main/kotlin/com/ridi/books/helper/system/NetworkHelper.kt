@@ -9,8 +9,8 @@ private fun Context.getActiveNetworkInfo(): NetworkInfo? {
     return manager.activeNetworkInfo
 }
 
-fun Context.isNetworkAvailable() = getActiveNetworkInfo()?.isConnectedOrConnecting ?: false
+fun Context.isNetworkAvailable() = getActiveNetworkInfo()?.isConnected ?: false
 
 fun Context.isMobileNetworkConnected() = getActiveNetworkInfo()?.let { networkInfo ->
-            networkInfo.type == ConnectivityManager.TYPE_MOBILE && networkInfo.isConnectedOrConnecting
+            networkInfo.type == ConnectivityManager.TYPE_MOBILE && networkInfo.isConnected
         } ?: false
