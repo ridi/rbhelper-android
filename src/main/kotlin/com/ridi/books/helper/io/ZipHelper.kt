@@ -97,11 +97,9 @@ object ZipHelper {
                 val prevBytesRead = zipInputStream.bytesRead
                 if (encryptor != null) {
                     val result = encryptor.encrypt(zipInputStream, out, file.name)
-                    if (result == EncryptResult.FAIL) {
-                        if (result == EncryptResult.SUCCESS) {
-                            continue
-                        }
-                    } else {
+                    if (result == EncryptResult.SUCCESS) {
+                        continue
+                    } else if (result == EncryptResult.FAIL) {
                         out.close()
                         throw EncryptException(file.name)
                     }
