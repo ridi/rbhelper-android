@@ -10,16 +10,13 @@ object ZipHelper {
     private val bufferSize = 8192
     private val progressUpdateStepSize = bufferSize / 16
 
-    enum class EncryptResult {
-        SUCCESS, FAIL, UNNECESSARY
-    }
-
     interface Listener {
         fun onProgress(unzippedBytes: Long)
     }
 
     interface Encryptor {
-        fun encrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String): EncryptResult
+        @Throws(EncryptUnnecessaryException::class, EncryptFailException::class)
+        fun encrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String)
     }
 
     @JvmStatic
@@ -96,13 +93,13 @@ object ZipHelper {
                 var readSize: Int
                 val prevBytesRead = zipInputStream.bytesRead
                 if (encryptor != null) {
-                    val result = encryptor.encrypt(zipInputStream, out, file.name)
-                    if (result == EncryptResult.SUCCESS) {
+                    try {
+                        encryptor.encrypt(zipInputStream, out, file.name)
                         continue
-                    } else if (result == EncryptResult.FAIL) {
+                    } catch (e: EncryptFailException) {
                         out.close()
-                        throw EncryptException(file.name)
-                    }
+                        return false
+                    } catch (e: EncryptUnnecessaryException) {}
                 }
 
                 do {

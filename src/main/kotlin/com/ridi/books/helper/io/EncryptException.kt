@@ -1,3 +1,5 @@
 package com.ridi.books.helper.io
 
-class EncryptException(fileName: String) : Exception("error while encrypt $fileName")
+open class EncryptException(message: String) : Exception(message)
+class EncryptFailException(fileName: String) : EncryptException("error while encrypt $fileName")
+class EncryptUnnecessaryException(fileName: String) : EncryptException("$fileName is unnecessary for encrypt")
