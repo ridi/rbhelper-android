@@ -96,10 +96,10 @@ object ZipHelper {
                     try {
                         encryptor.encrypt(zipInputStream, out, file.name)
                         continue
-                    } catch (e: EncryptFailException) {
+                    } catch (e: EncryptionFailedException) {
                         out.close()
                         return false
-                    } catch (e: EncryptUnnecessaryException) {}
+                    } catch (e: EncryptionUnnecessaryException) {}
                 }
 
                 do {
@@ -127,3 +127,6 @@ object ZipHelper {
         }
     }
 }
+
+class EncryptionFailedException(fileName: String) : Exception("error while encrypt $fileName")
+class EncryptionUnnecessaryException(fileName: String) : Exception("$fileName is unnecessary for encrypt")
