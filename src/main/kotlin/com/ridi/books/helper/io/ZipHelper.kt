@@ -15,7 +15,7 @@ object ZipHelper {
     }
 
     interface Encryptor {
-        @Throws(EncryptUnnecessaryException::class, EncryptFailException::class)
+        @Throws(EncryptionUnnecessaryException::class, EncryptionFailedException::class)
         fun encrypt(zipArchiveInputStream: ZipArchiveInputStream, outputStream: OutputStream, fileName: String)
     }
 
