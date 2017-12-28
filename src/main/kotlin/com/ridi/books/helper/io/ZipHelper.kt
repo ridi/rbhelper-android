@@ -126,7 +126,7 @@ object ZipHelper {
             zipInputStream.close()
         }
     }
-}
 
-class EncryptionFailedException(fileName: String) : Exception("error while encrypt $fileName")
-class EncryptionUnnecessaryException(fileName: String) : Exception("$fileName is unnecessary for encrypt")
+    class EncryptionFailedException(fileName: String) : Exception("error while encrypt $fileName")
+    class EncryptionUnnecessaryException(fileName: String) : Exception("$fileName is unnecessary for encrypt")
+}
