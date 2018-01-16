@@ -6,14 +6,14 @@ import android.os.Build
 import com.ridi.books.helper.Log
 
 @JvmOverloads
-fun Context.getPackageVersionCode(`package`: String, enabledOnly: Boolean = true): Int {
+fun Context.getPackageVersionCode(name: String, enabledOnly: Boolean = true): Int {
     try {
-        val info = packageManager.getPackageInfo(`package`, 0)
+        val info = packageManager.getPackageInfo(name, 0)
         if (enabledOnly.not() || info.applicationInfo.enabled) {
             return info.versionCode
         }
     } catch (e: PackageManager.NameNotFoundException) {
-        Log.d("Failed to get $`package` package info", e)
+        Log.d("Failed to get $name package info", e)
     }
     return -1
 }
@@ -31,9 +31,9 @@ fun Context.getSystemWebViewVersionCode(): Int {
         if (versionCode > 0) {
             return versionCode
         } else {
-            val `package` = "com.amazon.webview.chromium"
+            val packageName = "com.amazon.webview.chromium"
             try {
-                val info = packageManager.getPackageInfo(`package`, 0)
+                val info = packageManager.getPackageInfo(packageName, 0)
                 return if (info.versionCode >= 100000000) {
                     info.versionCode
                 } else {
@@ -46,7 +46,7 @@ fun Context.getSystemWebViewVersionCode(): Int {
                     }
                 }
             } catch (e: PackageManager.NameNotFoundException) {
-                Log.d("Failed to get $`package` package info", e)
+                Log.d("Failed to get $packageName package info", e)
             }
         }
     }
