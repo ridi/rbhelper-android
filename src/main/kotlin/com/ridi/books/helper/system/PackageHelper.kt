@@ -13,7 +13,7 @@ fun Context.getPackageVersionCode(name: String, enabledOnly: Boolean = true): In
             return info.versionCode
         }
     } catch (e: PackageManager.NameNotFoundException) {
-        Log.d("Failed to get $name package info", e)
+        Log.d(javaClass, "Failed to get $name package info", e)
     }
     return -1
 }
@@ -46,7 +46,7 @@ fun Context.getSystemWebViewVersionCode(): Int {
                     }
                 }
             } catch (e: PackageManager.NameNotFoundException) {
-                Log.d("Failed to get $packageName package info", e)
+                Log.d(javaClass, "Failed to get $packageName package info", e)
             }
         }
     }
