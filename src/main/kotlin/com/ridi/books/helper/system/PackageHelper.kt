@@ -34,7 +34,7 @@ fun Context.getSystemWebViewVersionCode(): Int {
             val `package` = "com.amazon.webview.chromium"
             try {
                 val info = packageManager.getPackageInfo(`package`, 0)
-                return if (info.versionCode / 100000000 > 0) {
+                return if (info.versionCode >= 100000000) {
                     info.versionCode
                 } else {
                     info.versionName.split(".").let { parts ->
