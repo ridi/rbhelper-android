@@ -22,6 +22,9 @@ fun <T : View?> View.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
 fun <T : View?> Fragment.find(@IdRes viewId: Int) = view.findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
+fun <T : View?> android.support.v4.app.Fragment.find(@IdRes viewId: Int) = view!!.findViewById<T>(viewId) as T
+
+@Suppress("UNCHECKED_CAST")
 fun <T : View?> Activity.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
@@ -38,6 +41,9 @@ fun <T : View?> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+
+@Suppress("UNCHECKED_CAST")
+fun <T: View?> android.support.v4.app.Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
 
