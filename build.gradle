@@ -44,6 +44,7 @@ android {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.android.support:support-compat:26.1.0'
+    compile 'com.android.support:support-fragment:26.1.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'org.apache.commons:commons-compress:1.12'
