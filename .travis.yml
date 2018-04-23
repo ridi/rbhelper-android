@@ -9,7 +9,9 @@ android:
     - build-tools-26.0.2
     - android-26
 
-script: ./gradlew test
+script:
+  - ./gradlew ktlint
+  - ./gradlew test
 
 notifications:
   email: false

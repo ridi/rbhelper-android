@@ -1,7 +1,14 @@
 package com.ridi.books.helper.io
 
 import com.ridi.books.helper.Log
-import java.io.*
+import java.io.Closeable
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.nio.ByteBuffer
 
 fun File.copyTo(dest: File): Boolean {
@@ -125,7 +132,6 @@ fun closeAndThrowExceptionToReport(closeable: Closeable?, primaryException: IOEx
         } catch (e: IOException) {
             throwable = primaryException ?: e
         }
-
     }
     throwable?.let {
         throw it

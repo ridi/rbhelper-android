@@ -1,6 +1,8 @@
 *.iml
-.gradle
-/local.properties
-/.idea
 .DS_Store
-/build
+.gradle
+.idea/*
+!.idea/codeStyles
+!.idea/inspectionProfiles
+build/
+local.properties

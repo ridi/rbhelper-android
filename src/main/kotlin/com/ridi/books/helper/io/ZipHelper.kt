@@ -3,12 +3,18 @@ package com.ridi.books.helper.io
 import com.ridi.books.helper.Log
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream
-import java.io.*
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.charset.MalformedInputException
 
 object ZipHelper {
-    private val bufferSize = 8192
-    private val progressUpdateStepSize = bufferSize / 16
+    private const val BUFFER_SIZE = 8192
+    private const val PROGRESS_UPDATE_STEP_SIZE = BUFFER_SIZE / 16
 
     interface Listener {
         fun onProgress(unzippedBytes: Long)
@@ -21,8 +27,14 @@ object ZipHelper {
 
     @JvmStatic
     @JvmOverloads
-    fun unzip(zipFile: File, destDir: File, deleteZip: Boolean, listener: Listener? = null,
-              encodings: List<String> = listOf("UTF8"), overwrite: Boolean = true): Boolean {
+    fun unzip(
+        zipFile: File,
+        destDir: File,
+        deleteZip: Boolean,
+        listener: Listener? = null,
+        encodings: List<String> = listOf("UTF8"),
+        overwrite: Boolean = true
+    ): Boolean {
         if (zipFile.exists().not()) {
             return false
         }
@@ -42,19 +54,24 @@ object ZipHelper {
     }
 
     @JvmStatic
-    fun unzipEncryptIfNeeded(inputStream: InputStream, destDir: File, listener: Listener?, encryptor: Encryptor?): Boolean {
-        return unzip(inputStream, destDir, listener, encryptor)
-    }
+    fun unzipEncryptIfNeeded(inputStream: InputStream, destDir: File, listener: Listener?, encryptor: Encryptor?) =
+        unzip(inputStream, destDir, listener, encryptor)
 
     @JvmStatic
-    fun unzipSelectedFile(inputStream: InputStream, destDir: File, selectedFileName: String): Boolean {
-        return unzip(inputStream, destDir, selectedFileName = selectedFileName)
-    }
+    fun unzipSelectedFile(inputStream: InputStream, destDir: File, selectedFileName: String): Boolean =
+        unzip(inputStream, destDir, selectedFileName = selectedFileName)
 
     @JvmStatic
     @JvmOverloads
-    fun unzip(inputStream: InputStream, destDir: File, listener: Listener? = null, encryptor: Encryptor? = null,
-              encoding: String = "UTF8", overwrite: Boolean = true, selectedFileName: String? = null): Boolean {
+    fun unzip(
+        inputStream: InputStream,
+        destDir: File,
+        listener: Listener? = null,
+        encryptor: Encryptor? = null,
+        encoding: String = "UTF8",
+        overwrite: Boolean = true,
+        selectedFileName: String? = null
+    ): Boolean {
         destDir.mkdirs()
 
         val zipInputStream = ZipArchiveInputStream(inputStream, encoding, true, true)
@@ -89,7 +106,7 @@ object ZipHelper {
                 }
 
                 val out = BufferedOutputStream(FileOutputStream(path))
-                val buf = ByteArray(bufferSize)
+                val buf = ByteArray(BUFFER_SIZE)
                 var readSize: Int
                 val prevBytesRead = zipInputStream.bytesRead
                 if (encryptor != null) {
@@ -110,7 +127,7 @@ object ZipHelper {
                     out.write(buf, 0, readSize)
                     listener?.let {
                         val bytesRead = zipInputStream.bytesRead - prevBytesRead
-                        if ((bytesRead / bufferSize) % progressUpdateStepSize == 0L) {
+                        if ((bytesRead / BUFFER_SIZE) % PROGRESS_UPDATE_STEP_SIZE == 0L) {
                             it.onProgress(bytesRead + prevBytesRead)
                         }
                     }

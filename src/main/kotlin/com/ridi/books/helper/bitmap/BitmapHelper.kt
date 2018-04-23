@@ -1,7 +1,15 @@
 package com.ridi.books.helper.bitmap
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.RectF
 import com.ridi.books.helper.Log
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageGammaFilter
@@ -24,11 +32,11 @@ fun computeSampleSize(srcWidth: Int, srcHeight: Int, reqWidth: Int, reqHeight: I
 }
 
 fun URL.loadWebImage(): Bitmap? {
-    try {
-        return BitmapFactory.decodeStream(openConnection().inputStream)
+    return try {
+        BitmapFactory.decodeStream(openConnection().inputStream)
     } catch (e: Exception) {
         Log.e(javaClass, "failed to load web image", e)
-        return null
+        null
     }
 }
 

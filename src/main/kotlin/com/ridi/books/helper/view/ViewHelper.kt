@@ -5,11 +5,25 @@ import android.app.Dialog
 import android.app.Fragment
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.support.annotation.*
+import android.support.annotation.AnyRes
+import android.support.annotation.AttrRes
+import android.support.annotation.BoolRes
+import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
+import android.support.annotation.DimenRes
+import android.support.annotation.DrawableRes
+import android.support.annotation.IdRes
+import android.support.annotation.IntegerRes
+import android.support.annotation.LayoutRes
+import android.support.annotation.Px
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
-import android.view.*
+import android.view.KeyCharacterMap
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewConfiguration
+import android.view.ViewGroup
 import com.ridi.books.helper.Log
 import com.ridi.books.helper.annotation.Dp
 
@@ -43,7 +57,7 @@ fun <T : View?> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 fun <T : View?> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Suppress("UNCHECKED_CAST")
-fun <T: View?> android.support.v4.app.Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+fun <T : View?> android.support.v4.app.Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
 
@@ -102,8 +116,8 @@ fun Context.isNavigationBarOnScreen(): Boolean {
     return if (id > 0) {
         bool(id)
     } else {
-        (ViewConfiguration.get(this).hasPermanentMenuKey().not()
-                && KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK).not())
+        ViewConfiguration.get(this).hasPermanentMenuKey().not() &&
+            KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK).not()
     }
 }
 

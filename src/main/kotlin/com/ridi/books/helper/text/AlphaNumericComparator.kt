@@ -1,7 +1,6 @@
 package com.ridi.books.helper.text
 
 import java.nio.CharBuffer
-import java.util.*
 
 class AlphaNumericComparator : Comparator<String> {
     override fun compare(lhs: String, rhs: String): Int {
@@ -30,8 +29,8 @@ class AlphaNumericComparator : Comparator<String> {
         val isNumerical = Character.isDigit(buffer.get(start))
         while (end < buffer.limit() && isNumerical == Character.isDigit(buffer.get(end))) {
             ++end
-            if (isNumerical && start + 1 < buffer.limit()
-                    && buffer.get(start) == '0' && Character.isDigit(buffer.get(end))) {
+            if (isNumerical && start + 1 < buffer.limit() &&
+                buffer.get(start) == '0' && Character.isDigit(buffer.get(end))) {
                 ++start // trim leading zeros
             }
         }

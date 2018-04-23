@@ -11,8 +11,10 @@ abstract class Preferences {
 
     abstract inner class Delegate(protected val key: String)
 
-    open inner class BooleanDelegate(key: String,
-                                              private val defaultValue: Boolean = false) : Delegate(key) {
+    open inner class BooleanDelegate(
+        key: String,
+        private val defaultValue: Boolean = false
+    ) : Delegate(key) {
         open operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean =
                 preferences.getBoolean(key, defaultValue)
 
@@ -20,8 +22,10 @@ abstract class Preferences {
                 preferences.edit().putBoolean(key, value).apply()
     }
 
-    open inner class IntDelegate(key: String,
-                                          private val defaultValue: Int = 0) : Delegate(key) {
+    open inner class IntDelegate(
+        key: String,
+        private val defaultValue: Int = 0
+    ) : Delegate(key) {
         open operator fun getValue(thisRef: Any?, property: KProperty<*>): Int =
                 preferences.getInt(key, defaultValue)
 
@@ -29,8 +33,10 @@ abstract class Preferences {
                 preferences.edit().putInt(key, value).apply()
     }
 
-    open inner class LongDelegate(key: String,
-                                           private val defaultValue: Long = 0L) : Delegate(key) {
+    open inner class LongDelegate(
+        key: String,
+        private val defaultValue: Long = 0L
+    ) : Delegate(key) {
         open operator fun getValue(thisRef: Any?, property: KProperty<*>): Long =
                 preferences.getLong(key, defaultValue)
 
@@ -38,8 +44,10 @@ abstract class Preferences {
                 preferences.edit().putLong(key, value).apply()
     }
 
-    inner class StringDelegate(key: String,
-                                        private val defaultValue: String? = null) : Delegate(key) {
+    inner class StringDelegate(
+        key: String,
+        private val defaultValue: String? = null
+    ) : Delegate(key) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>): String? =
                 preferences.getString(key, defaultValue)
 
@@ -47,9 +55,11 @@ abstract class Preferences {
                 preferences.edit().putString(key, value).apply()
     }
 
-    inner class JsonDelegate<T>(key: String,
-                                         private val clazz: Class<T>,
-                                         private val defaultValue: T? = null) : Delegate(key) {
+    inner class JsonDelegate<T>(
+        key: String,
+        private val clazz: Class<T>,
+        private val defaultValue: T? = null
+    ) : Delegate(key) {
         private val gson by lazy { Gson() }
         private val jsonParser by lazy { JsonParser() }
 
