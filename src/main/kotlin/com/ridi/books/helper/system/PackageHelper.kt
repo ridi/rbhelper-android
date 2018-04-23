@@ -41,7 +41,7 @@ fun Context.getSystemWebViewVersionCode(): Int {
                         if (parts.count() != 5) {
                             -1
                         } else {
-                            parts.drop(2).joinToString("").toInt()
+                            parts.drop(2).joinToString("").take(9).toInt()
                         }
                     }
                 }
