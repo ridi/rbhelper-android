@@ -45,8 +45,11 @@ public final class StorageOptions {
         }
 
         mounts.addAll(readVoldsFromMountsFile());
-        if (!mounts.isEmpty() && Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            compareMountsWithVold(mounts, readVoldFile());
+        if (!mounts.isEmpty()) {
+            File voldFstabFile = new File("/system/etc/vold.fstab");
+            if (voldFstabFile.exists()) {
+                compareMountsWithVold(mounts, readVoldFstabFile(voldFstabFile));
+            }
         }
         if (mounts.isEmpty()) {
             mounts.addAll(readFuseFromMountsFile());
@@ -99,7 +102,7 @@ public final class StorageOptions {
         }
     }
     
-    private static List<String> readVoldFile() {
+    private static List<String> readVoldFstabFile(File file) {
 		/*
 		 * /system/etc/vold.fstab 파일을 스캔하여, 아래와 같은 줄이 있는지 찾는다:
 		 * dev_mount sdcard /mnt/sdcard 1 ...
@@ -107,7 +110,7 @@ public final class StorageOptions {
         Scanner scanner = null;
         try {
             List<String> volds = new ArrayList<>();
-            scanner = new Scanner(new File("/system/etc/vold.fstab"));
+            scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (line.startsWith("dev_mount")) {
@@ -162,8 +165,9 @@ public final class StorageOptions {
         // Mounts 와 vold.fstab에서 서로 다른건 제거
         for (int i = 0; i < mounts.size(); i++) {
             String mount = mounts.get(i);
-            if (!volds.contains(mount))
+            if (!volds.contains(mount)) {
                 mounts.remove(i--);
+            }
         }
 
         volds.clear();
