@@ -18,19 +18,3 @@ fun View.hideSoftKeyboard(flags: Int = 0) = context.inputMethodManager.hideSoftI
 fun Context.toggleSoftKeyboard(showFlags: Int = 0, hideFlags: Int = 0) {
     inputMethodManager.toggleSoftInput(showFlags, hideFlags)
 }
-
-@JvmOverloads
-fun View.focusAndShowSoftKeyboard(
-    flags: Int = InputMethodManager.SHOW_IMPLICIT,
-    repeatIntervalInMs: Long = 100,
-    condition: () -> Boolean = { true }
-) {
-    if (condition().not()) {
-        return
-    }
-
-    requestFocus()
-    if (showSoftKeyboard(flags).not()) {
-        postDelayed({ focusAndShowSoftKeyboard(flags, repeatIntervalInMs, condition) }, repeatIntervalInMs)
-    }
-}
