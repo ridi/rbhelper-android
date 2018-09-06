@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.app.Fragment
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.support.annotation.AnyRes
 import android.support.annotation.AttrRes
 import android.support.annotation.BoolRes
@@ -75,7 +74,7 @@ fun <T : View?> android.support.v4.app.Fragment.findLazy(@IdRes viewId: Int) = l
 
 @ColorInt fun View.color(@ColorRes resId: Int) = context.color(resId)
 
-fun Context.drawable(@DrawableRes resId: Int): Drawable = ContextCompat.getDrawable(this, resId)
+fun Context.drawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)!!
 
 fun View.drawable(@DrawableRes resId: Int) = context.drawable(resId)
 

@@ -1,13 +1,13 @@
 buildscript {
-    ext.kotlin_version = '1.2.40'
+    ext.kotlin_version = '1.2.51'
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -25,12 +25,11 @@ group = 'com.github.ridi'
 version = '1.2.4'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
         versionCode 1
         versionName version
         consumerProguardFiles 'proguard-rules.pro'
@@ -47,12 +46,13 @@ configurations {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.android.support:support-compat:26.1.0'
-    compile 'com.android.support:support-fragment:26.1.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-    compile 'org.apache.commons:commons-compress:1.12'
+    compileOnly 'com.android.support:support-fragment:27.1.1'
+
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'org.apache.commons:commons-compress:1.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     testImplementation 'junit:junit:4.12'
 
     ktlint 'com.github.shyiko:ktlint:0.24.0'
