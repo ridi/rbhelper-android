@@ -54,7 +54,6 @@ public final class StorageOptions {
         if (mounts.isEmpty()) {
             mounts.addAll(readFuseFromMountsFile());
         }
-        testAndCleanMountsList(mounts);
 
         try {
             // 내장 SD 카드는 마운트된 항목에서 제거한다
@@ -171,16 +170,5 @@ public final class StorageOptions {
         }
 
         volds.clear();
-    }
-    
-    private static void testAndCleanMountsList(List<String> mounts) {
-		// Mount paths 의 유효성 테스트.
-        Iterator<String> it = mounts.iterator();
-        while (it.hasNext()) {
-            File file = new File(it.next());
-            if (!file.exists() || !file.isDirectory() || !file.canWrite()) {
-                it.remove();
-            }
-        }
     }
 }
