@@ -26,8 +26,9 @@ fun Context.getSystemWebViewVersionCode(): Int {
         }
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        val versionCode = getPackageVersionCode("com.google.android.webview",
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        val versionCode = getPackageVersionCode(
+            "com.google.android.webview", Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+        )
         if (versionCode > 0) {
             return versionCode
         } else {

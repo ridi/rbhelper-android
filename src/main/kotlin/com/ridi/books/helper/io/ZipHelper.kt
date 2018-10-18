@@ -40,8 +40,7 @@ object ZipHelper {
         }
         return try {
             encodings.any {
-                unzip(BufferedInputStream(FileInputStream(zipFile)),
-                        destDir, listener, null, it, overwrite)
+                unzip(BufferedInputStream(FileInputStream(zipFile)), destDir, listener, null, it, overwrite)
             }
         } catch (e: Exception) {
             Log.e(javaClass, "error while unzip", e)
