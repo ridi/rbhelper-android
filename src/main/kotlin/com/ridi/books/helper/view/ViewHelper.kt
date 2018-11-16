@@ -125,13 +125,13 @@ fun ViewGroup.logChildren() {
     fun ViewGroup.logChildrenRecursively(level: Int) {
         Log.d(javaClass, id.toString() + " - ViewGroup at level " + level)
         (0 until childCount)
-                .map { getChildAt(it) }
-                .forEach { child ->
-                    when (child) {
-                        is ViewGroup -> child.logChildrenRecursively(level + 1)
-                        else -> Log.d(child.javaClass, "${child.id}")
-                    }
+            .map { getChildAt(it) }
+            .forEach { child ->
+                when (child) {
+                    is ViewGroup -> child.logChildrenRecursively(level + 1)
+                    else -> Log.d(child.javaClass, "${child.id}")
                 }
+            }
     }
     logChildrenRecursively(0)
 }

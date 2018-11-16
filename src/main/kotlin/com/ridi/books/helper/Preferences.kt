@@ -15,44 +15,44 @@ abstract class Preferences {
         key: String,
         private val defaultValue: Boolean = false
     ) : Delegate(key) {
-        open operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean =
-                preferences.getBoolean(key, defaultValue)
+        open operator fun getValue(thisRef: Any?, property: KProperty<*>) = preferences.getBoolean(key, defaultValue)
 
-        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) =
-                preferences.edit().putBoolean(key, value).apply()
+        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
+            preferences.edit().putBoolean(key, value).apply()
+        }
     }
 
     open inner class IntDelegate(
         key: String,
         private val defaultValue: Int = 0
     ) : Delegate(key) {
-        open operator fun getValue(thisRef: Any?, property: KProperty<*>): Int =
-                preferences.getInt(key, defaultValue)
+        open operator fun getValue(thisRef: Any?, property: KProperty<*>) = preferences.getInt(key, defaultValue)
 
-        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) =
-                preferences.edit().putInt(key, value).apply()
+        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
+            preferences.edit().putInt(key, value).apply()
+        }
     }
 
     open inner class LongDelegate(
         key: String,
         private val defaultValue: Long = 0L
     ) : Delegate(key) {
-        open operator fun getValue(thisRef: Any?, property: KProperty<*>): Long =
-                preferences.getLong(key, defaultValue)
+        open operator fun getValue(thisRef: Any?, property: KProperty<*>) = preferences.getLong(key, defaultValue)
 
-        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Long) =
-                preferences.edit().putLong(key, value).apply()
+        open operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Long) {
+            preferences.edit().putLong(key, value).apply()
+        }
     }
 
     inner class StringDelegate(
         key: String,
         private val defaultValue: String? = null
     ) : Delegate(key) {
-        operator fun getValue(thisRef: Any?, property: KProperty<*>): String? =
-                preferences.getString(key, defaultValue)
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): String? = preferences.getString(key, defaultValue)
 
-        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String?) =
-                preferences.edit().putString(key, value).apply()
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String?) {
+            preferences.edit().putString(key, value).apply()
+        }
     }
 
     inner class JsonDelegate<T>(
@@ -64,18 +64,19 @@ abstract class Preferences {
         private val jsonParser by lazy { JsonParser() }
 
         operator fun getValue(thisRef: Any?, property: KProperty<*>): T? =
-                preferences.getString(key, null)?.let { jsonString ->
-                    try {
-                        gson.fromJson(jsonParser.parse(jsonString), clazz)
-                    } catch (e: JsonSyntaxException) {
-                        Log.e(javaClass, e)
-                        defaultValue
-                    }
-                } ?: defaultValue
+            preferences.getString(key, null)?.let { jsonString ->
+                try {
+                    gson.fromJson(jsonParser.parse(jsonString), clazz)
+                } catch (e: JsonSyntaxException) {
+                    Log.e(javaClass, e)
+                    defaultValue
+                }
+            } ?: defaultValue
 
-        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) =
-                preferences.edit()
-                        .putString(key, value?.let { gson.toJson(it).toString() })
-                        .apply()
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+            preferences.edit()
+                .putString(key, value?.let { gson.toJson(it).toString() })
+                .apply()
+        }
     }
 }

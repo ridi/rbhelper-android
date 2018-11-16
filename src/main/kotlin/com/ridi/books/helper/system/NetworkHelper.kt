@@ -12,5 +12,5 @@ private fun Context.getActiveNetworkInfo(): NetworkInfo? {
 fun Context.isNetworkAvailable() = getActiveNetworkInfo()?.isConnected ?: false
 
 fun Context.isMobileNetworkConnected() = getActiveNetworkInfo()?.let { networkInfo ->
-            networkInfo.type == ConnectivityManager.TYPE_MOBILE && networkInfo.isConnected
-        } ?: false
+    networkInfo.type == ConnectivityManager.TYPE_MOBILE && networkInfo.isConnected
+} ?: false
