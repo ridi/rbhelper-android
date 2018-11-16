@@ -55,6 +55,17 @@ abstract class Preferences {
         }
     }
 
+    inner class NonNullStringDelegate(
+        key: String,
+        private val defaultValue: String = ""
+    ) : Delegate(key) {
+        operator fun getValue(thisRef: Any?, property: KProperty<*>) = preferences.getString(key, defaultValue)!!
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+            preferences.edit().putString(key, value).apply()
+        }
+    }
+
     inner class JsonDelegate<T>(
         key: String,
         private val clazz: Class<T>,
