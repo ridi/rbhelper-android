@@ -22,7 +22,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ridi'
-version = '1.2.6'
+version = '1.2.7'
 
 android {
     compileSdkVersion 28
