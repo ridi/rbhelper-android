@@ -1,6 +1,6 @@
 package com.ridi.books.helper.annotation
 
-import android.support.annotation.Dimension
+import androidx.annotation.Dimension
 
 @Retention(AnnotationRetention.BINARY)
 @Target(

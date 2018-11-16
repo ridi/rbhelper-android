@@ -2,20 +2,7 @@ package com.ridi.books.helper.view
 
 import android.app.Activity
 import android.app.Dialog
-import android.app.Fragment
 import android.content.Context
-import android.support.annotation.AnyRes
-import android.support.annotation.AttrRes
-import android.support.annotation.BoolRes
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.annotation.DimenRes
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
-import android.support.annotation.IntegerRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.Px
-import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -23,6 +10,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
+import androidx.annotation.AnyRes
+import androidx.annotation.AttrRes
+import androidx.annotation.BoolRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
+import androidx.annotation.IntegerRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.Px
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.ridi.books.helper.Log
 import com.ridi.books.helper.annotation.Dp
 
@@ -32,19 +32,13 @@ fun ViewGroup.inflate(@LayoutRes resId: Int): View = LayoutInflater.from(context
 fun <T : View?> View.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View?> Fragment.find(@IdRes viewId: Int) = view.findViewById<T>(viewId) as T
-
-@Suppress("UNCHECKED_CAST")
-fun <T : View?> android.support.v4.app.Fragment.find(@IdRes viewId: Int) = view!!.findViewById<T>(viewId) as T
+fun <T : View?> Fragment.find(@IdRes viewId: Int) = view!!.findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> Activity.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> Dialog.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
-
-@Suppress("UNCHECKED_CAST")
-fun <T : View?> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> Activity.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
@@ -56,7 +50,7 @@ fun <T : View?> Dialog.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 fun <T : View?> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View?> android.support.v4.app.Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
+fun <T : View?> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
 
