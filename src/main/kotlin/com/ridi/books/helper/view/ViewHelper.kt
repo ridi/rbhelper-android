@@ -3,6 +3,8 @@ package com.ridi.books.helper.view
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.util.TypedValue
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -128,4 +130,14 @@ fun ViewGroup.logChildren() {
             }
     }
     logChildrenRecursively(0)
+}
+
+fun View.drawToBitmap(isHighQuality: Boolean = true): Bitmap {
+    val bitmap = Bitmap.createBitmap(
+        width,
+        height,
+        if (isHighQuality) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+    )
+    draw(Canvas(bitmap))
+    return bitmap
 }
