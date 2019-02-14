@@ -132,7 +132,9 @@ fun ViewGroup.logChildren() {
     logChildrenRecursively(0)
 }
 
-fun View.drawToBitmap(isHighQuality: Boolean = true): Bitmap {
+fun View.drawToBitmap(isHighQuality: Boolean = true): Bitmap? {
+    if (width == 0 || height == 0) return null
+
     val bitmap = Bitmap.createBitmap(
         width,
         height,
