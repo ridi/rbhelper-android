@@ -136,10 +136,11 @@ fun View.drawToBitmap(isHighQuality: Boolean = true): Bitmap? {
     if (width == 0 || height == 0) return null
 
     val bitmap = Bitmap.createBitmap(
-        width,
-        height,
+        width, height,
         if (isHighQuality) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-    )
+    ).apply {
+        density = Bitmap.DENSITY_NONE
+    }
     draw(Canvas(bitmap))
     return bitmap
 }
