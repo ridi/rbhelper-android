@@ -62,6 +62,14 @@ fun <T : View?> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun View.dip(@Dp value: Float) = context.dip(value)
 
+@Dp fun Context.px(@Px value: Int) = px(value.toFloat())
+
+@Dp fun View.px(@Px value: Int) = context.px(value)
+
+@Dp fun Context.px(@Px value: Float) = Math.round(value / resources.displayMetrics.density)
+
+@Dp fun View.px(@Px value: Float) = context.px(value)
+
 @Px fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
 
 @Px fun View.dimen(@DimenRes resId: Int) = context.dimen(resId)
