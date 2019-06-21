@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ridi.books.helper.Log
 import com.ridi.books.helper.annotation.Dp
+import kotlin.math.roundToInt
 
 fun ViewGroup.inflate(@LayoutRes resId: Int): View = LayoutInflater.from(context).inflate(resId, this)
 
@@ -58,17 +59,39 @@ fun <T : View?> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
 @Px fun View.dip(@Dp value: Int) = context.dip(value)
 
-@Px fun Context.dip(@Dp value: Float) = Math.round(value * resources.displayMetrics.density)
+@Px fun Context.dip(@Dp value: Float) = dip(value, false).toInt()
 
 @Px fun View.dip(@Dp value: Float) = context.dip(value)
+
+fun Context.dip(@Dp value: Int, accurate: Boolean) = dip(value.toFloat(), accurate)
+
+fun View.dip(@Dp value: Int, accurate: Boolean) = context.dip(value.toFloat(), accurate)
+
+fun Context.dip(@Dp value: Float, accurate: Boolean): Float {
+    val result = value * resources.displayMetrics.density
+    return if (accurate) result else result.roundToInt().toFloat()
+}
+
+fun View.dip(@Dp value: Float, sharp: Boolean) = context.dip(value, sharp)
 
 @Dp fun Context.px(@Px value: Int) = px(value.toFloat())
 
 @Dp fun View.px(@Px value: Int) = context.px(value)
 
-@Dp fun Context.px(@Px value: Float) = Math.round(value / resources.displayMetrics.density)
+@Dp fun Context.px(@Px value: Float) = px(value, false).toInt()
 
 @Dp fun View.px(@Px value: Float) = context.px(value)
+
+@Dp fun Context.px(@Px value: Int, accurate: Boolean) = px(value.toFloat(), accurate)
+
+@Dp fun View.px(@Px value: Int, accurate: Boolean) = context.px(value.toFloat(), accurate)
+
+@Dp fun Context.px(@Px value: Float, accurate: Boolean): Float {
+    val result = value / resources.displayMetrics.density
+    return if (accurate) result else result.roundToInt().toFloat()
+}
+
+@Dp fun View.px(@Px value: Float, sharp: Boolean) = context.px(value, sharp)
 
 @Px fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
 
