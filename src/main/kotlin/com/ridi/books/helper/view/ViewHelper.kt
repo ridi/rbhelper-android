@@ -54,21 +54,13 @@ fun <T : View?> View.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> Fragment.findLazy(@IdRes viewId: Int) = lazy { find<T>(viewId) }
 
-@Px fun Context.dip(@Dp value: Int) = dip(value.toFloat())
+fun Context.dip(@Dp value: Number) = value.toFloat() * resources.displayMetrics.density
 
-@Px fun View.dip(@Dp value: Int) = context.dip(value)
+fun View.dip(@Dp value: Number) = context.dip(value)
 
-@Px fun Context.dip(@Dp value: Float) = Math.round(value * resources.displayMetrics.density)
+@Dp fun Context.px(value: Number) = value.toFloat() / resources.displayMetrics.density
 
-@Px fun View.dip(@Dp value: Float) = context.dip(value)
-
-@Dp fun Context.px(@Px value: Int) = px(value.toFloat())
-
-@Dp fun View.px(@Px value: Int) = context.px(value)
-
-@Dp fun Context.px(@Px value: Float) = Math.round(value / resources.displayMetrics.density)
-
-@Dp fun View.px(@Px value: Float) = context.px(value)
+@Dp fun View.px(value: Number) = context.px(value)
 
 @Px fun Context.dimen(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
 
