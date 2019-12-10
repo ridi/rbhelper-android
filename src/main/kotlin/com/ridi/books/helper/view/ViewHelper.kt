@@ -144,3 +144,21 @@ fun View.drawToBitmap(isHighQuality: Boolean = true): Bitmap? {
     draw(Canvas(bitmap))
     return bitmap
 }
+
+fun View.isGone() = visibility == View.GONE
+
+fun View.isInvisible() = visibility == View.INVISIBLE
+
+fun View.isVisible() = visibility == View.VISIBLE
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
