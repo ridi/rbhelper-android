@@ -16,7 +16,7 @@ class BindingAdapters {
         fun setCustomBackground(
             view: View,
             @ColorInt strokeColor: Int?,
-            @Px strokeSize: Int = 0,
+            @Px strokeSize: Int?,
             @ColorInt backgroundColor: Int?,
             @Px radius: Int?
         ) {
@@ -24,7 +24,7 @@ class BindingAdapters {
                 val gradientDrawable = GradientDrawable()
                 radius?.let { gradientDrawable.cornerRadius = dip(radius) }
                 backgroundColor?.let { gradientDrawable.setColor(backgroundColor) }
-                strokeColor?.let { gradientDrawable.setStroke(dip(strokeSize).toInt(), strokeColor) }
+                strokeColor?.let { gradientDrawable.setStroke(dip(strokeSize ?: 1).toInt(), strokeColor) }
                 background = gradientDrawable
             }
         }
