@@ -2,7 +2,7 @@ package com.ridi.books.helper.view
 
 import android.animation.Animator
 
-abstract class SimpleAnimatorListener: Animator.AnimatorListener {
+abstract class SimpleAnimatorListener : Animator.AnimatorListener {
     override fun onAnimationRepeat(animation: Animator?) {
         // no-op
     }
