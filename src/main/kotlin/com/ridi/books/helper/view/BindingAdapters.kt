@@ -2,9 +2,11 @@ package com.ridi.books.helper.view
 
 import android.graphics.drawable.GradientDrawable
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.databinding.BindingAdapter
+import com.ridi.books.helper.text.makeSpannedFromHtml
 
 class BindingAdapters {
 
@@ -25,6 +27,12 @@ class BindingAdapters {
                 strokeColor?.let { gradientDrawable.setStroke(dip(strokeSize).toInt(), strokeColor) }
                 background = gradientDrawable
             }
+        }
+
+        @BindingAdapter("htmlText")
+        @JvmStatic
+        fun setHtmlText(textView: TextView, htmlText: String) {
+            textView.text = makeSpannedFromHtml(htmlText)
         }
     }
 }
