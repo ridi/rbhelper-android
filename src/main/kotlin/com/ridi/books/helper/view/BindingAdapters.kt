@@ -14,11 +14,11 @@ class BindingAdapters {
         @BindingAdapter(value = ["strokeColor", "strokeSize", "backgroundColor", "radius"], requireAll = false)
         @JvmStatic
         fun setCustomBackground(
-                view: View,
-                @ColorInt strokeColor: Int?,
-                @Px strokeSize: Int = 0,
-                @ColorInt backgroundColor: Int?,
-                @Px radius: Int?
+            view: View,
+            @ColorInt strokeColor: Int?,
+            @Px strokeSize: Int = 0,
+            @ColorInt backgroundColor: Int?,
+            @Px radius: Int?
         ) {
             view.apply {
                 val gradientDrawable = GradientDrawable()
