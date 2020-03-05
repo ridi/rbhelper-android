@@ -21,11 +21,17 @@ class BindingAdapters {
             @Px radius: Int?
         ) {
             view.apply {
+                val prevPaddingLeft = paddingLeft
+                val prevPaddingRight = paddingRight
+                val prevPaddingTop = paddingTop
+                val prevPaddingBottom = paddingBottom
+
                 val gradientDrawable = GradientDrawable()
                 radius?.let { gradientDrawable.cornerRadius = dip(radius) }
                 backgroundColor?.let { gradientDrawable.setColor(backgroundColor) }
                 strokeColor?.let { gradientDrawable.setStroke(dip(strokeSize ?: 1).toInt(), strokeColor) }
                 background = gradientDrawable
+                setPadding(prevPaddingLeft, prevPaddingTop, prevPaddingRight, prevPaddingBottom)
             }
         }
 
