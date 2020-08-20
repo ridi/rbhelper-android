@@ -346,7 +346,7 @@ public class TextDrawable extends Drawable {
      */
     private void measureContent() {
         //If drawing to a path, we cannot measure intrinsic bounds
-        //We must resly on setBounds being called externally
+        //We must rely on setBounds being called externally
         if (mTextPath != null) {
             //Clear any previous measurement
             mTextLayout = null;

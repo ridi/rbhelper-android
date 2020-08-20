@@ -11,9 +11,9 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
 import com.ridi.books.helper.Log
+import java.net.URL
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageGammaFilter
-import java.net.URL
 
 // 적합한 sample size를 계산해낸다
 fun computeSampleSize(srcWidth: Int, srcHeight: Int, reqWidth: Int, reqHeight: Int): Int {

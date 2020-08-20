@@ -72,12 +72,11 @@ abstract class Preferences {
         private val defaultValue: T? = null
     ) : Delegate(key) {
         private val gson by lazy { Gson() }
-        private val jsonParser by lazy { JsonParser() }
 
         operator fun getValue(thisRef: Any?, property: KProperty<*>): T? =
             preferences.getString(key, null)?.let { jsonString ->
                 try {
-                    gson.fromJson(jsonParser.parse(jsonString), clazz)
+                    gson.fromJson(JsonParser.parseString(jsonString), clazz)
                 } catch (e: JsonSyntaxException) {
                     Log.e(javaClass, e)
                     defaultValue
