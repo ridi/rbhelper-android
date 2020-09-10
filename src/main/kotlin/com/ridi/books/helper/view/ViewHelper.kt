@@ -34,7 +34,7 @@ fun ViewGroup.inflate(@LayoutRes resId: Int): View = LayoutInflater.from(context
 fun <T : View?> View.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View?> Fragment.find(@IdRes viewId: Int) = view!!.findViewById<T>(viewId) as T
+fun <T : View?> Fragment.find(@IdRes viewId: Int) = requireView().findViewById<T>(viewId) as T
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View?> Activity.find(@IdRes viewId: Int) = findViewById<T>(viewId) as T
