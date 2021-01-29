@@ -119,7 +119,7 @@ fun Context.isNavigationBarOnScreen(): Boolean {
 // For view hierarchy inspection
 fun ViewGroup.logChildren() {
     fun ViewGroup.logChildrenRecursively(level: Int) {
-        Log.d(javaClass, id.toString() + " - ViewGroup at level " + level)
+        Log.d(javaClass, "$id - ViewGroup at level $level")
         (0 until childCount)
             .map { getChildAt(it) }
             .forEach { child ->

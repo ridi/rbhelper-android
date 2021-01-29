@@ -10,6 +10,7 @@ import java.io.InputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.nio.ByteBuffer
+import kotlin.math.min
 
 fun File.copyTo(dest: File): Boolean {
     try {
@@ -18,7 +19,7 @@ fun File.copyTo(dest: File): Boolean {
         val inChannel = input.channel
         val outChannel = output.channel
 
-        val blockSize = Math.min(512 * 1024 * 1024, inChannel.size())
+        val blockSize = min(512 * 1024 * 1024, inChannel.size())
         var position = 0L
         while (outChannel.transferFrom(inChannel, position, blockSize) > 0) {
             position += blockSize
