@@ -1,8 +1,10 @@
 package com.ridi.books.helper.system
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.webkit.WebView
 import com.ridi.books.helper.Log
 
 @JvmOverloads
@@ -18,9 +20,16 @@ fun Context.getPackageVersionCode(name: String, enabledOnly: Boolean = true): In
     return -1
 }
 
-fun Context.getSystemWebViewVersionCode(): Int {
+@JvmOverloads
+@SuppressLint("WebViewApiAvailability")
+fun Context.getSystemWebViewVersionCode(useWebViewApiIfAvailable: Boolean = false): Int {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val versionCode = getPackageVersionCode("com.android.chrome")
+        var webViewPackageName: String? = null
+        if (useWebViewApiIfAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            webViewPackageName = WebView.getCurrentWebViewPackage()?.packageName
+        }
+        webViewPackageName = webViewPackageName ?: "com.android.chrome"
+        val versionCode = getPackageVersionCode(webViewPackageName)
         if (versionCode > 0) {
             return versionCode
         }
