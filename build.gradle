@@ -23,7 +23,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.ridi'
-version = '1.5.5'
+version = '1.5.6'
 
 android {
     compileSdkVersion 29
