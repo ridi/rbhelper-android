@@ -70,6 +70,10 @@ fun View.dip(@Dp value: Number) = context.dip(value)
 
 @ColorInt fun View.color(@ColorRes resId: Int) = context.color(resId)
 
+fun Context.colorStateList(@ColorRes resId: Int) = ContextCompat.getColorStateList(this, resId)
+
+fun View.colorStateList(@ColorRes resId: Int) = context.colorStateList(resId)
+
 fun Context.drawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(this, resId)!!
 
 fun View.drawable(@DrawableRes resId: Int) = context.drawable(resId)
