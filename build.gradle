@@ -53,7 +53,7 @@ dependencies {
     compileOnly 'androidx.fragment:fragment-ktx:1.2.5'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'com.github.ridi:android-gpuimage:v2.1.1'
     // compress 1.13+ requires API 26+ (java.nio.file) in order to use ZipFile
     implementation 'org.apache.commons:commons-compress:1.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
