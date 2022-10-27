@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 
 private fun Context.getActiveNetworkInfo(): NetworkInfo? {
-    val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val manager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return manager.activeNetworkInfo
 }
 
